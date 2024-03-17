@@ -12,7 +12,6 @@ public class MediumAsteroidSpawner : MonoBehaviour, IAsteroidStrategy
     public int spawnAmount = 1;
     public float spawnDistance = 15.0f;
     private void Start(){
-        //InvokeRepeating(nameof(Spawn), this.spawnRate, this.spawnRate);
     }
 
     public void Spawn(){

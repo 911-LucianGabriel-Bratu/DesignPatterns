@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IScoreObserver
 {
     public static Player Instance { get; private set; }
-    public Bullet bulletPrefab; // change here for modifications
+    public Gun currentGun;
+    public GameObject level1Gun;
+    public GameObject level2Gun;
     public float thrust_speed = 1.0f;
     public float turn_speed = 1.0f;
     private bool _thrusting;
@@ -21,13 +23,13 @@ public class Player : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
+        currentGun = level1Gun.GetComponent<Level1Gun>();
         _rigidBody = GetComponent<Rigidbody2D>();
     }
 
     void Start()
     {
-        
+
     }
 
     private void Update()
@@ -58,9 +60,9 @@ public class Player : MonoBehaviour
     }
 
     private void Shoot(){
-        Bullet bullet = Instantiate(this.bulletPrefab, this.transform.position, this.transform.rotation);
-        bullet.Project(this.transform.up);
+        currentGun.Shoot();
     }
+
 
     private void OnCollisionEnter2D(Collision2D collision){
         if(collision.gameObject.tag == "Asteroid"){
@@ -70,5 +72,9 @@ public class Player : MonoBehaviour
 
             FindObjectOfType<GameManager>().PlayerDied();
         }
+    }
+    
+    public void OnScoreThresholdReached(){
+        currentGun = level2Gun.GetComponent<Level2Gun>();
     }
 }

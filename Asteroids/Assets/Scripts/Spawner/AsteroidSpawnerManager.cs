@@ -10,7 +10,6 @@ private int currentSpawnerIndex = 0;
 
     private void Start()
     {
-        // Initialize spawner array with different strategies
         GameObject[] spawnerObjects = GameObject.FindGameObjectsWithTag("AsteroidSpawner");
         spawners = new IAsteroidStrategy[spawnerObjects.Length];
         for (int i = 0; i < spawnerObjects.Length; i++)
@@ -18,13 +17,11 @@ private int currentSpawnerIndex = 0;
             spawners[i] = spawnerObjects[i].GetComponent<IAsteroidStrategy>();
         }
 
-        // Initialize spawners with asteroidSprites
         foreach (var spawner in spawners)
         {
             spawner.Initialize(asteroidSprites);
         }
 
-        // Update difficulty text initially
         UpdateDifficultyText();
         InvokeRepeating(nameof(SpawnAsteroids), this.spawners[currentSpawnerIndex].GetSpawnRate(), this.spawners[currentSpawnerIndex].GetSpawnRate());
     }
