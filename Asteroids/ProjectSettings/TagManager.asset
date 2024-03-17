@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Bullet
   - Asteroid
+  - AsteroidSpawner
   layers:
   - Default
   - TransparentFX
@@ -18,7 +19,7 @@ TagManager:
   - Asteroid
   - Boundary
   - Player Respawn
-  - 
+  - Spawner Difficulty
   - 
   - 
   - 
