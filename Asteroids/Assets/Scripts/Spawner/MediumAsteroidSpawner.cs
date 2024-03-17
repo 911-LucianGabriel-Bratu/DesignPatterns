@@ -11,6 +11,7 @@ public class MediumAsteroidSpawner : MonoBehaviour, IAsteroidStrategy
     public float trajectory_variance = 15.0f;
     public int spawnAmount = 1;
     public float spawnDistance = 15.0f;
+    private string _difficulty_name = "Medium";
     private void Start(){
     }
 
@@ -36,5 +37,8 @@ public class MediumAsteroidSpawner : MonoBehaviour, IAsteroidStrategy
     }
     public float GetSpawnRate(){
         return this.spawnRate;
+    }
+    public string GetDifficultyName(){
+        return this._difficulty_name;
     }
 }

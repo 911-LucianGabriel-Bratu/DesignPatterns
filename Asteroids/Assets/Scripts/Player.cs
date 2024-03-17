@@ -8,6 +8,7 @@ public class Player : MonoBehaviour, IScoreObserver
     public Gun currentGun;
     public GameObject level1Gun;
     public GameObject level2Gun;
+    public float default_thrust_speed = 1.0f;
     public float thrust_speed = 1.0f;
     public float turn_speed = 1.0f;
     private bool _thrusting;
@@ -72,9 +73,27 @@ public class Player : MonoBehaviour, IScoreObserver
 
             FindObjectOfType<GameManager>().PlayerDied();
         }
+        else if (collision.gameObject.CompareTag("BananaPowerUp"))
+        {
+            GameManager.Instance.IncreaseScore(100);
+            Destroy(collision.gameObject);
+        }
+        else if (collision.gameObject.CompareTag("ApplePowerUp"))
+        {
+            this.thrust_speed += 0.5f;
+            Destroy(collision.gameObject);
+        }
     }
     
     public void OnScoreThresholdReached(){
         currentGun = level2Gun.GetComponent<Level2Gun>();
+    }
+
+    public void OnScoreReset(){
+        currentGun = level1Gun.GetComponent<Level1Gun>();
+    }
+
+    public void SetDefaultThrustSpeed(){
+        this.thrust_speed = this.default_thrust_speed;
     }
 }

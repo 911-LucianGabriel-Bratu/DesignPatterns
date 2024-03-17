@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Timeline.Actions;
@@ -11,21 +12,22 @@ public class EasyAsteroidSpawner : MonoBehaviour, IAsteroidStrategy
     public float trajectory_variance = 15.0f;
     public int spawnAmount = 1;
     public float spawnDistance = 15.0f;
+    private string _difficulty_name = "Easy";
     private void Start(){
     }
 
     public void Spawn(){
         for(int i = 0; i < spawnAmount; i++){
-            Vector3 spawnDirection = Random.insideUnitCircle.normalized * this.spawnDistance;
+            Vector3 spawnDirection = UnityEngine.Random.insideUnitCircle.normalized * this.spawnDistance;
             Vector3 spawnPoint = this.transform.position + spawnDirection;
 
-            float variance = Random.Range(-this.trajectory_variance, this.trajectory_variance);
+            float variance = UnityEngine.Random.Range(-this.trajectory_variance, this.trajectory_variance);
             Quaternion rotation = Quaternion.AngleAxis(variance, Vector3.forward);
 
             Asteroid asteroid = Instantiate(this.asteroidPrefab, spawnPoint, rotation);
-            Sprite sprite = this.asteroidSprites[Random.Range(0, this.asteroidSprites.Length)];
+            Sprite sprite = this.asteroidSprites[UnityEngine.Random.Range(0, this.asteroidSprites.Length)];
             asteroid.SetSprite(sprite);
-            asteroid.size = Random.Range(asteroid.minSize, asteroid.maxSize);
+            asteroid.size = UnityEngine.Random.Range(asteroid.minSize, asteroid.maxSize);
             asteroid.SetTrajectory(rotation * -spawnDirection);
         }
     }
@@ -37,5 +39,9 @@ public class EasyAsteroidSpawner : MonoBehaviour, IAsteroidStrategy
 
     public float GetSpawnRate(){
         return this.spawnRate;
+    }
+
+    public string GetDifficultyName(){
+        return this._difficulty_name;
     }
 }
