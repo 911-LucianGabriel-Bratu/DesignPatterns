@@ -34,6 +34,10 @@ public class Asteroid : MonoBehaviour
         Destroy(this.gameObject, this.maxLifetime);
     }
 
+    public void SetSprite(Sprite sprite){
+        _spriteRenderer.sprite = sprite;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision){
         if(collision.gameObject.tag == "Bullet"){
             if((this.size / 2) >= this.minSize){
