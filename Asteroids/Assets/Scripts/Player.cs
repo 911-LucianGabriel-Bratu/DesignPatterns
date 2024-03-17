@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public static Player Instance { get; private set; }
     public Bullet bulletPrefab; // change here for modifications
     public float thrust_speed = 1.0f;
     public float turn_speed = 1.0f;
@@ -12,6 +13,15 @@ public class Player : MonoBehaviour
     private Rigidbody2D _rigidBody;
 
     private void Awake(){
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         _rigidBody = GetComponent<Rigidbody2D>();
     }
 
