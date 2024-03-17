@@ -12,6 +12,7 @@ private int currentSpawnerIndex = 0;
     {
         GameObject[] spawnerObjects = GameObject.FindGameObjectsWithTag("AsteroidSpawner");
         spawners = new IAsteroidStrategy[spawnerObjects.Length];
+
         for (int i = 0; i < spawnerObjects.Length; i++)
         {
             spawners[i] = spawnerObjects[i].GetComponent<IAsteroidStrategy>();
@@ -44,7 +45,7 @@ private int currentSpawnerIndex = 0;
 
     private void UpdateDifficultyText()
     {
-        difficultyText.text = $"Difficulty: {spawners[currentSpawnerIndex].GetType().Name}";
+        difficultyText.text = $"Difficulty: {spawners[currentSpawnerIndex].GetDifficultyName()}";
     }
 
     public void SpawnAsteroids()

@@ -14,6 +14,26 @@ public class GameManager : MonoBehaviour
     public int score = 0;
     public Text scoreText;
     public Text livesText;
+    public static GameManager Instance { get; private set; }
+    
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void IncreaseScore(int points)
+    {
+        score += points;
+        UpdateScoreText();
+    }
+
 
     private void Start()
     {
@@ -24,11 +44,11 @@ public class GameManager : MonoBehaviour
             Debug.LogError("Player instance not found!");
         }
         RegisterScoreObserver(playerInstance);
-        UpdateDifficultyText();
+        UpdateScoreText();
         UpdateLivesText();
     }
 
-    private void UpdateDifficultyText()
+    private void UpdateScoreText()
     {
         scoreText.text = $"Score: {score}";
 
@@ -55,7 +75,7 @@ public class GameManager : MonoBehaviour
         else{
             score += 25;
         }
-        UpdateDifficultyText();
+        UpdateScoreText();
     }
     public void PlayerDied(){
         this.explosion.transform.position = this.playerInstance.transform.position;
@@ -87,8 +107,10 @@ public class GameManager : MonoBehaviour
     private void GameOver(){
         this.lives = 3;
         this.score = 0;
-        UpdateDifficultyText();
+        UpdateScoreText();
         UpdateLivesText();
+        NotifyResetScoreObservers();
+        playerInstance.SetDefaultThrustSpeed();
 
         Invoke(nameof(Respawn), this.respawnTime);
     }
@@ -103,6 +125,13 @@ public class GameManager : MonoBehaviour
         foreach (var observer in scoreObservers)
         {
             observer.OnScoreThresholdReached();
+        }
+    }
+
+    private void NotifyResetScoreObservers(){
+        foreach (var observer in scoreObservers)
+        {
+            observer.OnScoreReset();
         }
     }
 }
