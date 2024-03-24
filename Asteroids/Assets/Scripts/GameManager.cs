@@ -34,6 +34,12 @@ public class GameManager : MonoBehaviour
         UpdateScoreText();
     }
 
+    public void IncreaseLives(int lives)
+    {
+        this.lives += lives;
+        UpdateLivesText();
+    }
+
 
     private void Start()
     {

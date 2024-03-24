@@ -83,6 +83,13 @@ public class Player : MonoBehaviour, IScoreObserver
             this.thrust_speed += 0.5f;
             Destroy(collision.gameObject);
         }
+        else if (collision.gameObject.CompareTag("StarPowerUp"))
+        {
+            GameManager.Instance.IncreaseLives(collision.gameObject.GetComponent<StarPowerUp>().Lives);
+            GameManager.Instance.IncreaseScore(collision.gameObject.GetComponent<StarPowerUp>().Score);
+            this.thrust_speed += collision.gameObject.GetComponent<StarPowerUp>().Speed;
+            Destroy(collision.gameObject);
+        }
     }
     
     public void OnScoreThresholdReached(){

@@ -7,6 +7,10 @@ TagManager:
   - Bullet
   - Asteroid
   - AsteroidSpawner
+  - BananaPowerUp
+  - PowerUpFactory
+  - ApplePowerUp
+  - StarPowerUp
   layers:
   - Default
   - TransparentFX
@@ -20,7 +24,7 @@ TagManager:
   - Boundary
   - Player Respawn
   - Spawner Difficulty
-  - 
+  - PoweUp
   - 
   - 
   - 
